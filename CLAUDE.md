@@ -36,7 +36,7 @@ Sticky runner panel on desktop; bottom progress pill on mobile.
 Each section is an it('should …') test card: QUEUED → RUNNING → PASS. It starts when scrolled into view.
 The automation test fails on purpose, retries, then passes ("still compiling").
 Final report: all tests passed, real elapsed time, confetti, re-run suite button.
-Style: bold, playful neo-brutalist. Thick ink borders, hard shadows, yellow/pink/blue/green. Space Grotesk + JetBrains Mono. Animations smooth and fast.
+Style: bold, playful neo-brutalist. Thick ink borders, hard shadows, teal/indigo palette (ink #0f1b2d, paper #f1f5f9, teal #5eead4, periwinkle #a5b4fc, indigo #6366f1, aqua #2dd4bf). Space Grotesk + JetBrains Mono. Animations smooth and fast.
 Content rules
 Do not name any employer or company. Show total experience only: 1.5+ years in QA.
 Core skills: manual and exploratory testing, test cases from PRDs, bug reporting, API (Postman), mobile QA, AI/RAG feature testing, Jira, Git.
