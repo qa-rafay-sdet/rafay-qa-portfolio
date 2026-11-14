@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>rafay.spec — QA Portfolio</title>
+<meta name="description" content="Rafay, QA engineer with 1.5+ years in QA. Manual and exploratory testing, API checks, mobile QA and AI/RAG feature testing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --ink:#111;--paper:#fff8e7;--yellow:#ffd93d;--pink:#ff6b9d;--blue:#4d96ff;--green:#6bcb77;
+  --shadow:6px 6px 0 var(--ink);--b:3px solid var(--ink);
+  --sans:'Space Grotesk',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0}
+html,body{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:clamp(1rem,.95rem + .25vw,1.15rem);line-height:1.55;padding-bottom:84px}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+
+/* layout */
+.shell{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(1rem,3vw,2rem);max-width:1400px;margin:0 auto;padding:clamp(1rem,3vw,2rem)}
+.runner{display:none}
+@media (min-width:1100px){
+  .shell{grid-template-columns:280px minmax(0,1fr)}
+  .runner{display:block;position:sticky;top:1rem;align-self:start}
+  .pill{display:none!important}
+  body{padding-bottom:0}
+}
+main{display:grid;gap:clamp(1.25rem,3vw,2rem);min-width:0}
+
+/* runner panel */
+.runner{background:var(--ink);color:var(--paper);border:var(--b);box-shadow:var(--shadow);padding:1rem;font-family:var(--mono);font-size:.85rem}
+.runner h2{font-size:.95rem;color:var(--yellow);margin-bottom:.25rem}
+.runner .meta{display:flex;justify-content:space-between;opacity:.8;margin-bottom:.75rem}
+.runner ol{list-style:none;padding:0;display:grid;gap:.15rem}
+.runner li{display:flex;gap:.5rem;align-items:center;min-height:32px;opacity:.55;line-height:1.3}
+.runner li[data-state=running],.runner li[data-state=pass],.runner li[data-state=fail]{opacity:1}
+.runner li .dot{flex:none;width:.85rem;text-align:center}
+.bar{height:10px;border:2px solid var(--paper);margin-top:.9rem}
+.bar i{display:block;height:100%;width:0;background:var(--green);transition:width .4s}
+
+/* mobile pill */
+.pill{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:.75rem;min-height:48px;padding:.4rem 1rem;background:var(--ink);color:var(--paper);border:var(--b);border-radius:999px;box-shadow:4px 4px 0 var(--pink);font-family:var(--mono);font-size:.85rem;max-width:calc(100vw - 24px)}
+.pill .bar{width:clamp(60px,22vw,140px);margin:0}
+
+/* test card */
+.test{background:#fff;border:var(--b);box-shadow:var(--shadow);transition:transform .15s ease-out,box-shadow .15s}
+.test-head{display:flex;flex-wrap:wrap;gap:.5rem .75rem;align-items:center;justify-content:space-between;padding:.7rem 1rem;border-bottom:var(--b);background:var(--yellow);font-family:var(--mono);font-size:.85rem;font-weight:700}
+.test-title{overflow-wrap:anywhere}
+.badge{padding:.15rem .6rem;border:2px solid var(--ink);background:#fff;letter-spacing:.04em}
+.test[data-state=queued] .badge{background:#eee}
+.test[data-state=running] .badge{background:var(--blue);color:#fff}
+.test[data-state=pass] .badge{background:var(--green)}
+.test[data-state=fail] .badge{background:var(--pink)}
+.test-body{padding:clamp(1rem,3vw,2rem);overflow-wrap:break-word}
+.js .test[data-state=queued] .test-body{opacity:.35;filter:grayscale(1)}
+.js .test .test-body{transition:opacity .35s,filter .35s}
+.test[data-state=running] .test-head{background-image:repeating-linear-gradient(45deg,transparent 0 10px,rgba(0,0,0,.08) 10px 20px);animation:slide .6s linear infinite}
+@keyframes slide{to{background-position:28px 0}}
+
+/* hero */
+.hero-grid{display:grid;gap:1.5rem;grid-template-columns:minmax(0,1fr)}
+.hero-photo{order:1}.hero-text{order:2}.term{order:3}
+.hero-photo{border:var(--b);box-shadow:var(--shadow);background:var(--blue);width:min(100%,360px);aspect-ratio:1;justify-self:center}
+.hero-photo img{width:100%;height:100%;object-fit:cover}
+.eyebrow{font-family:var(--mono);font-size:.85rem;font-weight:700;background:var(--pink);display:inline-block;padding:.2rem .6rem;border:2px solid var(--ink)}
+h1{font-size:clamp(2rem,1.2rem + 4.5vw,4.25rem);line-height:1.12;margin:.75rem 0;letter-spacing:-.02em}
+h1 mark{background:var(--yellow);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
+.lede{max-width:56ch}
+.cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.25rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.55rem 1.1rem;border:var(--b);box-shadow:4px 4px 0 var(--ink);background:var(--green);font-weight:700;text-decoration:none;transition:transform .12s,box-shadow .12s}
+.btn.alt{background:#fff}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.term{background:var(--ink);color:var(--paper);border:var(--b);box-shadow:var(--shadow);font-family:var(--mono);font-size:clamp(.78rem,.7rem + .3vw,.92rem);padding:1rem;overflow-wrap:anywhere}
+.term p+p{margin-top:.25rem}
+.term .ok{color:var(--green)}.term .wip{color:var(--yellow)}.term .dim{opacity:.6}
+.caret{display:inline-block;width:.6ch;height:1.1em;background:var(--paper);vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+@media (min-width:760px){
+  .hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}
+  .hero-text{grid-column:1 / -1;order:-1}
+  .hero-photo{order:1}.term{order:2}
+  .hero-photo{justify-self:stretch;width:100%;max-width:none}
+}
+
+/* cursor blob (mouse only) */
+.blob{display:none}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .blob{display:block;position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;background:radial-gradient(circle,rgba(77,150,255,.35),transparent 70%);pointer-events:none;z-index:0;transition:transform .12s ease-out}
+  .shell{position:relative;z-index:1}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+<div class="blob" aria-hidden="true"></div>
+
+<div class="shell">
+  <aside class="runner" aria-label="Test runner">
+    <h2>▶ rafay.spec</h2>
+    <div class="meta"><span id="rCount">0/7 passed</span><span id="rTime">0.0s</span></div>
+    <ol id="rList"></ol>
+    <div class="bar"><i id="rBar"></i></div>
+  </aside>
+
+  <main>
+    <section class="test" id="hero" data-state="pass" data-name="should introduce the tester" aria-labelledby="hero-t">
+      <div class="test-head"><span class="test-title" id="hero-t">it('should introduce the tester')</span><span class="badge">PASS</span></div>
+      <div class="test-body">
+        <div class="hero-grid">
+          <div class="hero-photo">
+            <picture>
+              <source srcset="assets/rafay.webp" type="image/webp">
+              <img src="assets/rafay.jpg" width="800" height="800" alt="Portrait of Rafay" fetchpriority="high">
+            </picture>
+          </div>
+          <div class="term" role="img" aria-label="Terminal output listing what Rafay tests">
+            <p class="dim">$ run --suite rafay.spec</p>
+            <p><span class="ok">✓</span> manual + exploratory testing</p>
+            <p><span class="ok">✓</span> test cases written from PRDs</p>
+            <p><span class="ok">✓</span> API checks in Postman</p>
+            <p><span class="ok">✓</span> mobile apps and AI/RAG features</p>
+            <p><span class="wip">…</span> Playwright + CI (in progress)</p>
+            <p class="dim">$ <span class="caret"></span></p>
+          </div>
+          <div class="hero-text">
+            <span class="eyebrow">QA engineer · 1.5+ years in QA</span>
+            <h1>I'm Rafay. I find the bugs <mark>before your users do.</mark></h1>
+            <p class="lede">I turn PRDs into test cases, break features on purpose, and write bug reports a developer can reproduce on the first try. Lately that includes mobile apps and AI/RAG features, where "it worked once" doesn't count as a pass.</p>
+            <div class="cta">
+              <a class="btn" href="#">See the test suite</a>
+              <a class="btn alt" href="https://linkedin.com/in/syedmuhammadrafayhassni" target="_blank" rel="noopener">LinkedIn</a>
+              <a class="btn alt" href="https://github.com/qa-rafay-sdet" target="_blank" rel="noopener">GitHub</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- next sections go here: identity, skills, projects, posts, automation, contact -->
+  </main>
+</div>
+
+<div class="pill" aria-label="Test progress">
+  <span id="pCount">0/7</span><div class="bar"><i id="pBar"></i></div><span id="pTime">0.0s</span>
+</div>
+
+<script>
+(function(){
+  var NAMES=['should introduce the tester','should explain who I am','should list what I test','should show sample work','should share what I write','should automate the boring parts','should be easy to reach'];
+  var TOTAL=NAMES.length,t0=Date.now(),passed=0;
+  var list=document.getElementById('rList');
+  var rows=NAMES.map(function(n){var li=document.createElement('li');li.dataset.state='queued';li.innerHTML='<span class="dot">○</span><span>'+n+'</span>';list.appendChild(li);return li});
+  var icon={queued:'○',running:'◐',pass:'✓',fail:'✗'};
+  function paint(i,s){rows[i].dataset.state=s;rows[i].firstChild.textContent=icon[s]}
+  function stats(){
+    var txt=passed+'/'+TOTAL,pct=(passed/TOTAL*100)+'%';
+    document.getElementById('rCount').textContent=txt+' passed';document.getElementById('pCount').textContent=txt;
+    document.getElementById('rBar').style.width=pct;document.getElementById('pBar').style.width=pct;
+  }
+  var tick=setInterval(function(){var s=((Date.now()-t0)/1000).toFixed(1)+'s';document.getElementById('rTime').textContent=s;document.getElementById('pTime').textContent=s},100);
+  window.__stopTimer=function(){clearInterval(tick)};
+  stats();
+
+  var cards=[].slice.call(document.querySelectorAll('.test'));
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function setBadge(c,s){c.dataset.state=s;c.querySelector('.badge').textContent=s.toUpperCase()}
+  function run(card,idx){
+    if(card.__done)return;card.__done=true;
+    setBadge(card,'running');paint(idx,'running');
+    setTimeout(function(){setBadge(card,'pass');paint(idx,'pass');passed++;stats()},reduce?0:700);
+  }
+  cards.forEach(function(c,i){c.__idx=i;setBadge(c,'queued')});
+  if(!('IntersectionObserver' in window)){cards.forEach(function(c,i){run(c,i)});}
+  else{
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target,e.target.__idx)}})},{threshold:.25});
+    cards.forEach(function(c){io.observe(c)});
+  }
+
+  /* mouse-only effects */
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!reduce){
+    var blob=document.querySelector('.blob');
+    addEventListener('mousemove',function(e){blob.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},{passive:true});
+    cards.forEach(function(c){
+      c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(900px) rotateX('+(-y*3)+'deg) rotateY('+(x*3)+'deg)'});
+      c.addEventListener('mouseleave',function(){c.style.transform=''});
+    });
+  }
+})();
+</script>
+</body>
+</html>
