@@ -9,7 +9,7 @@ Always share the production URL, never a per-deploy preview link.
 Deployment protection stays OFF so the link opens without a login.
 Current status (as of 2026-11-15)
 
-Done: 1/7 (Hero)
+Done: 7/7 (Hero, Identity, Skills, Projects, Posts, Automation, Contact + final report)
 
 Built so far:
 
@@ -22,11 +22,12 @@ No-JS fallback: all cards render as PASS so content stays visible.
 
 Not done / open issues:
 
-The GitHub repo is EMPTY. Nothing has been pushed yet. First job: put index.html and /assets/ in this folder, commit, push to main.
-The Netlify site has a deploy from a manual drag-and-drop. Connect it to the repo (or deploy with the Netlify CLI) so pushes go live.
-README.md not written yet.
-
-Remaining sections (assumed order, confirm with me before building): 2. Identity 3. Skills 4. Projects (placeholder cards only) 5. LinkedIn posts (I supply the links) 6. Automation (fails on purpose, retries, passes: "still compiling") 7. Contact + final report
+Projects: three placeholder cards. Replace when I supply real samples.
+LinkedIn posts: three placeholder cards. Replace when I supply the links.
+Netlify is NOT connected to the repo, so a push does not go live. Deploy by uploading only index.html, assets/rafay.jpg and assets/rafay.webp from a clean folder (Netlify MCP deploy). Do not upload CLAUDE.md, README.md or assets/profile_picture_rafay.png.
+"Creative strategy" was removed from the skills on purpose. Storytelling is enough.
+The "same bug, two reports" demo in Identity is a made-up example and is labelled as such on the page.
+Tilt is on the small inner cards (.tilt), not on the big test cards.
 
 Concept (keep exactly this)
 
