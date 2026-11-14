@@ -4,7 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>rafay.spec — QA Portfolio</title>
-<meta name="description" content="Rafay, QA engineer with 1.5+ years in QA. Manual and exploratory testing, API checks, mobile QA and AI/RAG feature testing.">
+<meta name="description" content="Rafay, QA engineer with 1.5+ years in QA. Manual and exploratory testing, UX-focused checks, API testing, mobile QA and AI/RAG feature testing.">
+<meta name="theme-color" content="#0f1b2d">
+<meta property="og:title" content="rafay.spec — QA Portfolio">
+<meta property="og:description" content="A portfolio that runs a test suite on its owner. QA engineer, 1.5+ years in QA.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://rafay-spec.netlify.app">
+<meta property="og:image" content="https://rafay-spec.netlify.app/assets/rafay.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230f1b2d'/%3E%3Cpath d='M8 17l5 5 11-12' fill='none' stroke='%235eead4' stroke-width='4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -21,6 +28,9 @@ html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:clamp(1rem,.95rem + .25vw,1.15rem);line-height:1.55;padding-bottom:84px}
 img{max-width:100%;display:block}
 a{color:inherit}
+ul,ol{padding:0;list-style:none}
+[hidden]{display:none!important}
+html:not(.js) .js-only{display:none!important}
 :focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 
 /* layout */
@@ -35,54 +45,72 @@ a{color:inherit}
 main{display:grid;gap:clamp(1.25rem,3vw,2rem);min-width:0}
 
 /* runner panel */
-.runner{background:var(--ink);color:var(--paper);border:var(--b);box-shadow:var(--shadow);padding:1rem;font-family:var(--mono);font-size:.85rem}
+.runner{background:var(--ink);color:var(--paper);border:var(--b);box-shadow:var(--shadow);padding:1rem;font-family:var(--mono);font-size:.82rem}
 .runner h2{font-size:.95rem;color:var(--cyan);margin-bottom:.25rem}
-.runner .meta{display:flex;justify-content:space-between;opacity:.8;margin-bottom:.75rem}
-.runner ol{list-style:none;padding:0;display:grid;gap:.15rem}
-.runner li{display:flex;gap:.5rem;align-items:center;min-height:32px;opacity:.55;line-height:1.3}
-.runner li[data-state=running],.runner li[data-state=pass],.runner li[data-state=fail]{opacity:1}
-.runner li .dot{flex:none;width:.85rem;text-align:center}
+.runner .meta{display:flex;justify-content:space-between;opacity:.8;margin-bottom:.5rem}
+.runner ol{display:grid}
+.runner li a{display:flex;gap:.5rem;align-items:center;min-height:44px;opacity:.55;line-height:1.3;text-decoration:none;transition:opacity .2s,color .2s}
+.runner li a:hover{opacity:1;color:var(--cyan)}
+.runner li:not([data-state=queued]) a{opacity:1}
+.runner li[data-state=pass] .dot{color:var(--mint)}
+.runner li[data-state=fail] a{color:var(--violet)}
+.runner li .dot{flex:none;width:.9rem;text-align:center}
+.runner li[data-state=running] .dot{animation:blink .6s steps(1) infinite}
 .bar{height:10px;border:2px solid var(--paper);margin-top:.9rem}
 .bar i{display:block;height:100%;width:0;background:var(--mint);transition:width .4s}
 
 /* mobile pill */
-.pill{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:.75rem;min-height:48px;padding:.4rem 1rem;background:var(--ink);color:var(--paper);border:var(--b);border-radius:999px;box-shadow:4px 4px 0 var(--violet);font-family:var(--mono);font-size:.85rem;max-width:calc(100vw - 24px)}
+.pill{position:fixed;left:50%;bottom:max(12px,env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:.75rem;min-height:48px;padding:.4rem 1rem;background:var(--ink);color:var(--paper);border:var(--b);border-radius:999px;box-shadow:4px 4px 0 var(--violet);font-family:var(--mono);font-size:.85rem;max-width:calc(100vw - 24px);white-space:nowrap}
 .pill .bar{width:clamp(60px,22vw,140px);margin:0}
 
 /* test card */
-.test{background:#fff;border:var(--b);box-shadow:var(--shadow);transition:transform .15s ease-out,box-shadow .15s}
-.test-head{display:flex;flex-wrap:wrap;gap:.5rem .75rem;align-items:center;justify-content:space-between;padding:.7rem 1rem;border-bottom:var(--b);background:var(--cyan);font-family:var(--mono);font-size:.85rem;font-weight:700}
+.test{background:#fff;border:var(--b);box-shadow:var(--shadow);scroll-margin-top:1rem}
+.test-head{display:flex;flex-wrap:wrap;gap:.5rem .75rem;align-items:center;justify-content:space-between;padding:.7rem 1rem;border-bottom:var(--b);background:var(--cyan);font-family:var(--mono);font-size:.85rem;font-weight:700;transition:background-color .25s,color .25s}
+.test:nth-of-type(even) .test-head{background:var(--violet)}
 .test-title{overflow-wrap:anywhere}
-.badge{padding:.15rem .6rem;border:2px solid var(--ink);background:#fff;letter-spacing:.04em}
+.badge{padding:.15rem .6rem;border:2px solid var(--ink);background:#fff;color:var(--ink);letter-spacing:.04em}
 .test[data-state=queued] .badge{background:#eee}
 .test[data-state=running] .badge{background:var(--blue);color:#fff}
 .test[data-state=pass] .badge{background:var(--mint)}
+.test[data-state=fail] .test-head{background:var(--ink);color:var(--paper)}
 .test[data-state=fail] .badge{background:var(--violet)}
 .test-body{padding:clamp(1rem,3vw,2rem);overflow-wrap:break-word}
 .js .test[data-state=queued] .test-body{opacity:.35;filter:grayscale(1)}
 .js .test .test-body{transition:opacity .35s,filter .35s}
 .test[data-state=running] .test-head{background-image:repeating-linear-gradient(45deg,transparent 0 10px,rgba(0,0,0,.08) 10px 20px);animation:slide .6s linear infinite}
+.test.shake{animation:shake .4s}
 @keyframes slide{to{background-position:28px 0}}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+@keyframes blink{50%{opacity:0}}
+
+/* shared type */
+h1{font-size:clamp(2rem,1.2rem + 4.5vw,4.25rem);line-height:1.12;margin:.75rem 0;letter-spacing:-.02em}
+h1 mark{background:var(--cyan);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
+.test-body h2,.report h2{font-size:clamp(1.5rem,1.1rem + 2vw,2.5rem);line-height:1.15;letter-spacing:-.01em}
+h3{font-size:clamp(1.1rem,1rem + .5vw,1.35rem);line-height:1.25}
+.lede{max-width:60ch;margin-top:.6rem}
+.eyebrow,.tag{font-family:var(--mono);font-size:.8rem;font-weight:700;display:inline-block;padding:.2rem .6rem;border:2px solid var(--ink);background:var(--violet)}
+.tag.todo{background:#fff;border-style:dashed}
+.note{font-family:var(--mono);font-size:.82rem;opacity:.75}
+.grid{display:grid;gap:1.25rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));margin-top:1.5rem}
+.box{border:var(--b);box-shadow:4px 4px 0 var(--ink);background:#fff;padding:1.1rem;display:grid;gap:.6rem;align-content:start;transition:transform .15s ease-out,box-shadow .15s}
+.box p{font-size:.97em}
+.box>.tag{justify-self:start}
+.cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.25rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;max-width:100%;padding:.55rem 1.1rem;border:var(--b);box-shadow:4px 4px 0 var(--ink);background:var(--mint);color:var(--ink);font:inherit;font-weight:700;text-decoration:none;cursor:pointer;overflow-wrap:anywhere;transition:transform .12s,box-shadow .12s}
+.btn.alt{background:#fff}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
 
 /* hero */
 .hero-grid{display:grid;gap:1.5rem;grid-template-columns:minmax(0,1fr)}
 .hero-photo{order:1}.hero-text{order:2}.term{order:3}
 .hero-photo{border:var(--b);box-shadow:var(--shadow);background:var(--blue);width:min(100%,360px);aspect-ratio:1;justify-self:center}
 .hero-photo img{width:100%;height:100%;object-fit:cover}
-.eyebrow{font-family:var(--mono);font-size:.85rem;font-weight:700;background:var(--violet);display:inline-block;padding:.2rem .6rem;border:2px solid var(--ink)}
-h1{font-size:clamp(2rem,1.2rem + 4.5vw,4.25rem);line-height:1.12;margin:.75rem 0;letter-spacing:-.02em}
-h1 mark{background:var(--cyan);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
-.lede{max-width:56ch}
-.cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.25rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:.55rem 1.1rem;border:var(--b);box-shadow:4px 4px 0 var(--ink);background:var(--mint);font-weight:700;text-decoration:none;transition:transform .12s,box-shadow .12s}
-.btn.alt{background:#fff}
-.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
 .term{background:var(--ink);color:var(--paper);border:var(--b);box-shadow:var(--shadow);font-family:var(--mono);font-size:clamp(.78rem,.7rem + .3vw,.92rem);padding:1rem;overflow-wrap:anywhere}
 .term p+p{margin-top:.25rem}
-.term .ok{color:var(--mint)}.term .wip{color:var(--cyan)}.term .dim{opacity:.6}
+.term .ok{color:var(--mint)}.term .wip{color:var(--cyan)}.term .bad{color:var(--violet)}.term .dim{opacity:.6}
 .caret{display:inline-block;width:.6ch;height:1.1em;background:var(--paper);vertical-align:text-bottom;animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
 @media (min-width:760px){
   .hero-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);align-items:start}
   .hero-text{grid-column:1 / -1;order:-1}
@@ -90,11 +118,82 @@ h1 mark{background:var(--cyan);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
   .hero-photo{justify-self:stretch;width:100%;max-width:none}
 }
 
+/* identity: bug report demo */
+.bug{margin-top:2rem;border:var(--b);background:var(--paper);padding:clamp(1rem,2.5vw,1.5rem)}
+.tabs{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.tab{min-height:48px;padding:.4rem 1rem;border:var(--b);background:#fff;color:var(--ink);font:700 .85rem var(--mono);cursor:pointer;transition:transform .12s,box-shadow .12s,background-color .12s}
+.tab[aria-pressed=true]{background:var(--ink);color:var(--paper);box-shadow:4px 4px 0 var(--mint);transform:translate(-2px,-2px)}
+.ticket{background:#fff;border:var(--b);margin-top:1rem;font-size:.95em}
+.js .ticket{animation:pop .25s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.ticket header{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;padding:.6rem .9rem;border-bottom:var(--b);font-family:var(--mono);font-size:.8rem;font-weight:700}
+.ticket[data-v=vague] header{background:#e2e8f0}
+.ticket[data-v=clear] header{background:var(--cyan)}
+.ticket .inner{padding:.9rem;display:grid;gap:.7rem}
+.ticket ol{list-style:decimal;padding-left:1.3rem}
+.ticket dt{font-family:var(--mono);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;opacity:.7}
+.ticket dl{display:grid;gap:.6rem}
+.ticket footer{padding:.6rem .9rem;border-top:2px dashed var(--ink);font-family:var(--mono);font-size:.82rem}
+
+/* skills */
+.group h3{font-family:var(--mono);font-size:.9rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chips li{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .65rem;border:2px solid var(--ink);font-family:var(--mono);font-size:.82rem;background:#fff;transition:background-color .3s,transform .3s;transition-delay:calc(var(--i,0) * 70ms)}
+.chips li::before{content:'✓';font-weight:700}
+.test[data-state=pass] .chips li{background:#ccfbf1}
+.js .test[data-state=queued] .chips li,.js .test[data-state=running] .chips li{transform:translateY(4px)}
+.group.wip{background:repeating-linear-gradient(-45deg,#fff 0 14px,#eef2ff 14px 28px)}
+.group.wip .chips li,.test[data-state=pass] .group.wip .chips li{border-style:dashed;background:#fff}
+.group.wip .chips li::before{content:'◐';color:var(--blue)}
+
+/* projects + posts */
+.thumb{border:2px solid var(--ink);aspect-ratio:5/3;width:100%;height:auto;object-fit:cover;background:var(--violet)}
+.skel{display:grid;gap:.45rem}
+.skel i{display:block;height:.7rem;background:#e2e8f0}
+.skel i:nth-child(2){width:85%}.skel i:nth-child(3){width:60%}
+
+/* automation */
+.log{margin-top:1.5rem}
+.js .log .step{display:none}
+.js .log .step.on{display:block;animation:pop .25s ease-out}
+.log .in{padding-left:2ch}
+.learn{display:grid;gap:.9rem;margin-top:1.5rem}
+.learn li{display:grid;gap:.35rem}
+.learn .row{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.25rem 1rem;font-family:var(--mono);font-size:.85rem;font-weight:700}
+.learn .track{height:14px;border:2px solid var(--ink);background:repeating-linear-gradient(45deg,var(--violet) 0 8px,#fff 8px 16px);background-size:23px 100%;animation:slide 1s linear infinite}
+
+/* contact */
+.contact-grid{display:grid;gap:2rem;grid-template-columns:minmax(0,1fr);margin-top:1.5rem}
+@media (min-width:860px){.contact-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}}
+.links{display:grid;gap:.8rem;align-content:start}
+.links .btn{justify-content:space-between;gap:.75rem;text-align:left}
+.links .btn span{font-family:var(--mono);font-size:.8rem;font-weight:400;overflow-wrap:anywhere;min-width:0}
+form{display:grid;gap:.8rem}
+label{display:grid;gap:.3rem;font-family:var(--mono);font-size:.82rem;font-weight:700}
+input,textarea{width:100%;min-height:48px;padding:.6rem .75rem;border:var(--b);background:#fff;color:var(--ink);font:500 1rem var(--sans)}
+textarea{min-height:120px;resize:vertical}
+input:focus,textarea:focus{outline:none;box-shadow:4px 4px 0 var(--blue)}
+
+/* final report */
+.report{background:var(--ink);color:var(--paper);border:var(--b);box-shadow:6px 6px 0 var(--mint);padding:clamp(1.25rem,4vw,2.5rem);scroll-margin-top:1rem}
+.report .kicker{font-family:var(--mono);font-size:.85rem;color:var(--cyan);margin-bottom:.5rem}
+.tally{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:.75rem;margin:1.25rem 0}
+.tally div{border:2px solid var(--paper);padding:.7rem .8rem}
+.tally dt{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;opacity:.75}
+.tally dd{font-size:clamp(1.6rem,1.2rem + 2vw,2.6rem);font-weight:700;line-height:1.1;color:var(--cyan);font-variant-numeric:tabular-nums}
+.report .btn{border-color:var(--paper);box-shadow:4px 4px 0 var(--paper)}
+.report .btn:hover{box-shadow:6px 6px 0 var(--paper)}
+.report .btn:active{box-shadow:1px 1px 0 var(--paper)}
+.js .report:not([data-done]) .tally,.js .report:not([data-done]) #rerun{opacity:.45}
+footer.site{font-family:var(--mono);font-size:.8rem;opacity:.7;text-align:center;padding:.5rem 0 1rem}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:30}
+
 /* cursor blob (mouse only) */
 .blob{display:none}
 @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
   .blob{display:block;position:fixed;left:0;top:0;width:220px;height:220px;margin:-110px 0 0 -110px;border-radius:50%;background:radial-gradient(circle,rgba(99,102,241,.30),transparent 70%);pointer-events:none;z-index:0;transition:transform .12s ease-out}
   .shell{position:relative;z-index:1}
+  .box:hover{box-shadow:8px 8px 0 var(--ink)}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
@@ -107,13 +206,22 @@ h1 mark{background:var(--cyan);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
 <div class="shell">
   <aside class="runner" aria-label="Test runner">
     <h2>▶ rafay.spec</h2>
-    <div class="meta"><span id="rCount">0/7 passed</span><span id="rTime">0.0s</span></div>
-    <ol id="rList"></ol>
-    <div class="bar"><i id="rBar"></i></div>
+    <div class="meta"><span id="rCount">7/7 passed</span><span id="rTime"></span></div>
+    <ol id="rList">
+      <li data-state="pass"><a href="#hero"><span class="dot">✓</span><span>should introduce the tester</span></a></li>
+      <li data-state="pass"><a href="#identity"><span class="dot">✓</span><span>should explain who I am</span></a></li>
+      <li data-state="pass"><a href="#skills"><span class="dot">✓</span><span>should list what I test</span></a></li>
+      <li data-state="pass"><a href="#projects"><span class="dot">✓</span><span>should show sample work</span></a></li>
+      <li data-state="pass"><a href="#posts"><span class="dot">✓</span><span>should share what I write</span></a></li>
+      <li data-state="pass"><a href="#automation"><span class="dot">✓</span><span>should automate the boring parts</span></a></li>
+      <li data-state="pass"><a href="#contact"><span class="dot">✓</span><span>should be easy to reach</span></a></li>
+    </ol>
+    <div class="bar"><i id="rBar" style="width:100%"></i></div>
   </aside>
 
   <main>
-    <section class="test" id="hero" data-state="pass" data-name="should introduce the tester" aria-labelledby="hero-t">
+    <!-- 1. HERO -->
+    <section class="test" id="hero" data-state="pass" aria-labelledby="hero-t">
       <div class="test-head"><span class="test-title" id="hero-t">it('should introduce the tester')</span><span class="badge">PASS</span></div>
       <div class="test-body">
         <div class="hero-grid">
@@ -127,6 +235,7 @@ h1 mark{background:var(--cyan);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
             <p class="dim">$ run --suite rafay.spec</p>
             <p><span class="ok">✓</span> manual + exploratory testing</p>
             <p><span class="ok">✓</span> test cases written from PRDs</p>
+            <p><span class="ok">✓</span> UX checks: flows, wording, error states</p>
             <p><span class="ok">✓</span> API checks in Postman</p>
             <p><span class="ok">✓</span> mobile apps and AI/RAG features</p>
             <p><span class="wip">…</span> Playwright + CI (in progress)</p>
@@ -135,9 +244,9 @@ h1 mark{background:var(--cyan);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
           <div class="hero-text">
             <span class="eyebrow">QA engineer · 1.5+ years in QA</span>
             <h1>I'm Rafay. I find the bugs <mark>before your users do.</mark></h1>
-            <p class="lede">I turn PRDs into test cases, break features on purpose, and write bug reports a developer can reproduce on the first try. Lately that includes mobile apps and AI/RAG features, where "it worked once" doesn't count as a pass.</p>
+            <p class="lede">I turn PRDs into test cases, break features on purpose, and write bug reports a developer can reproduce on the first try. I also use the product the way a real person would, so the confusing screen that matches the spec still gets reported.</p>
             <div class="cta">
-              <a class="btn" href="#">See the test suite</a>
+              <a class="btn" href="#identity">See the test suite</a>
               <a class="btn alt" href="https://linkedin.com/in/syedmuhammadrafayhassni" target="_blank" rel="noopener">LinkedIn</a>
               <a class="btn alt" href="https://github.com/qa-rafay-sdet" target="_blank" rel="noopener">GitHub</a>
             </div>
@@ -145,52 +254,359 @@ h1 mark{background:var(--cyan);padding:0 .2em;box-shadow:4px 4px 0 var(--ink)}
         </div>
       </div>
     </section>
-    <!-- next sections go here: identity, skills, projects, posts, automation, contact -->
+
+    <!-- 2. IDENTITY -->
+    <section class="test" id="identity" data-state="pass" aria-labelledby="identity-t">
+      <div class="test-head"><span class="test-title" id="identity-t">it('should explain who I am')</span><span class="badge">PASS</span></div>
+      <div class="test-body">
+        <h2>I test software, then I explain what I found.</h2>
+        <p class="lede">I've spent 1.5+ years in QA, mostly on mobile apps, APIs and AI/RAG features. Three habits shape how I work.</p>
+        <div class="grid">
+          <article class="box tilt">
+            <span class="tag">01 / tester</span>
+            <h3>I test past the happy path</h3>
+            <p>Most of my week is manual and exploratory testing: writing test cases from PRDs, checking APIs in Postman, and logging what breaks in Jira. Everyone already tried the happy path, so I spend my time on the rest.</p>
+          </article>
+          <article class="box tilt">
+            <span class="tag">02 / ux</span>
+            <h3>I test for the person using it</h3>
+            <p>A screen can match the spec and still confuse people. I report the unclear error message, the dead end, and the flow that takes six taps when two would do.</p>
+          </article>
+          <article class="box tilt">
+            <span class="tag">03 / storyteller</span>
+            <h3>I write bugs as short stories</h3>
+            <p>What I did, what I expected, what happened. If a developer has to message me to understand the report, I wrote it badly. I use the same habit when I post about QA on LinkedIn.</p>
+          </article>
+        </div>
+
+        <div class="bug">
+          <h3>Same bug, two reports</h3>
+          <p class="note">A made-up example to show the format. It isn't from a real product.</p>
+          <div class="tabs js-only" role="group" aria-label="Choose a version of the bug report">
+            <button type="button" class="tab" data-show="vague" aria-pressed="true">The vague one</button>
+            <button type="button" class="tab" data-show="clear" aria-pressed="false">How I'd write it</button>
+          </div>
+          <article class="ticket" data-v="vague">
+            <header><span>BUG</span><span>Login not working</span></header>
+            <div class="inner"><p>Login is broken on mobile. Pls fix ASAP.</p></div>
+            <footer>Developer replies: "Which device? What did you do?"</footer>
+          </article>
+          <article class="ticket" data-v="clear">
+            <header><span>BUG</span><span>Log in button stays disabled after password autofill (iOS Safari)</span></header>
+            <div class="inner">
+              <dl>
+                <div><dt>Steps</dt><dd><ol><li>Open the login screen in Safari on an iPhone.</li><li>Let the saved password fill in both fields.</li><li>Look at the Log in button.</li></ol></dd></div>
+                <div><dt>Expected</dt><dd>The button turns on once both fields are filled.</dd></div>
+                <div><dt>Actual</dt><dd>It stays grey until I type a character by hand.</dd></div>
+                <div><dt>Impact</dt><dd>Anyone with a saved password is stuck on this screen.</dd></div>
+                <div><dt>Environment</dt><dd>iPhone 14, iOS 18.2, Safari. Happens 5 times out of 5.</dd></div>
+              </dl>
+            </div>
+            <footer>Developer replies: "Reproduced. Fixing."</footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SKILLS -->
+    <section class="test" id="skills" data-state="pass" aria-labelledby="skills-t">
+      <div class="test-head"><span class="test-title" id="skills-t">it('should list what I test')</span><span class="badge">PASS</span></div>
+      <div class="test-body">
+        <h2>What I test, and what I test it with.</h2>
+        <div class="grid">
+          <div class="box group">
+            <h3>describe('daily testing')</h3>
+            <ul class="chips">
+              <li style="--i:0">Manual testing</li><li style="--i:1">Exploratory testing</li><li style="--i:2">Test cases from PRDs</li><li style="--i:3">Bug reporting</li><li style="--i:4">API testing (Postman)</li><li style="--i:5">Mobile QA</li><li style="--i:6">AI/RAG feature testing</li>
+            </ul>
+          </div>
+          <div class="box group">
+            <h3>describe('ux eye')</h3>
+            <ul class="chips">
+              <li style="--i:2">User flows</li><li style="--i:3">Error messages</li><li style="--i:4">Empty and edge states</li><li style="--i:5">Consistency across screens</li><li style="--i:6">Wording that makes sense</li>
+            </ul>
+          </div>
+          <div class="box group">
+            <h3>describe('storytelling')</h3>
+            <ul class="chips">
+              <li style="--i:4">Bug reports devs can reproduce</li><li style="--i:5">Writing about QA</li>
+            </ul>
+          </div>
+          <div class="box group">
+            <h3>describe('tools')</h3>
+            <ul class="chips">
+              <li style="--i:6">Postman</li><li style="--i:7">Jira</li><li style="--i:8">Git</li>
+            </ul>
+          </div>
+          <div class="box group wip">
+            <h3>describe('learning now')</h3>
+            <ul class="chips">
+              <li>Playwright</li><li>API automation</li><li>CI</li>
+            </ul>
+            <p class="note">In progress. See the automation test below.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PROJECTS -->
+    <section class="test" id="projects" data-state="pass" aria-labelledby="projects-t">
+      <div class="test-head"><span class="test-title" id="projects-t">it('should show sample work')</span><span class="badge">PASS</span></div>
+      <div class="test-body">
+        <h2>Sample work</h2>
+        <p class="lede">These three cards are placeholders. Each one gets replaced with a real sample as I publish it.</p>
+        <div class="grid">
+          <article class="box tilt">
+            <img class="thumb" src="https://placehold.co/600x360/a5b4fc/0f1b2d?text=Bug+report" width="600" height="360" alt="" loading="lazy">
+            <span class="tag todo">it.todo · coming soon</span>
+            <h3>A bug report, start to finish</h3>
+            <p>One report with its steps, its evidence, and what happened after I filed it.</p>
+          </article>
+          <article class="box tilt">
+            <img class="thumb" src="https://placehold.co/600x360/5eead4/0f1b2d?text=Test+cases" width="600" height="360" alt="" loading="lazy">
+            <span class="tag todo">it.todo · coming soon</span>
+            <h3>Test cases from a PRD</h3>
+            <p>How one requirement turns into a set of test cases, including the ones the PRD didn't mention.</p>
+          </article>
+          <article class="box tilt">
+            <img class="thumb" src="https://placehold.co/600x360/6366f1/f1f5f9?text=Playwright" width="600" height="360" alt="" loading="lazy">
+            <span class="tag todo">it.todo · coming soon</span>
+            <h3>Playwright practice repo</h3>
+            <p>My first automated UI tests, written while I learn the tool.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. LINKEDIN POSTS -->
+    <section class="test" id="posts" data-state="pass" aria-labelledby="posts-t">
+      <div class="test-head"><span class="test-title" id="posts-t">it('should share what I write')</span><span class="badge">PASS</span></div>
+      <div class="test-body">
+        <h2>What I write</h2>
+        <p class="lede">I post about QA on LinkedIn. My three best posts will be linked here.</p>
+        <div class="grid">
+          <article class="box tilt">
+            <span class="tag todo">post.01 · link coming soon</span>
+            <div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>
+          </article>
+          <article class="box tilt">
+            <span class="tag todo">post.02 · link coming soon</span>
+            <div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>
+          </article>
+          <article class="box tilt">
+            <span class="tag todo">post.03 · link coming soon</span>
+            <div class="skel" aria-hidden="true"><i></i><i></i><i></i></div>
+          </article>
+        </div>
+        <div class="cta">
+          <a class="btn" href="https://linkedin.com/in/syedmuhammadrafayhassni" target="_blank" rel="noopener">Read my posts on LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. AUTOMATION -->
+    <section class="test" id="automation" data-state="pass" aria-labelledby="automation-t">
+      <div class="test-head"><span class="test-title" id="automation-t">it('should automate the boring parts')</span><span class="badge">PASS · 1 RETRY</span></div>
+      <div class="test-body">
+        <h2>Automation: still compiling.</h2>
+        <p class="lede">I'm learning Playwright now, with API automation and CI alongside it. It isn't part of my daily work yet, which is why this test failed on its first run.</p>
+        <div class="term log" aria-label="Test log for the automation test">
+          <p class="dim">$ run automation.spec</p>
+          <p class="step"><span class="bad">✗</span> expect(rafay.automation).toBe('production-ready')</p>
+          <p class="step in dim">Expected: "production-ready"</p>
+          <p class="step in dim">Received: "still compiling"</p>
+          <p class="step"><span class="wip">↻</span> Retry 1 of 1, with an honest expectation</p>
+          <p class="step"><span class="ok">✓</span> expect(rafay.automation).toBe('still compiling')</p>
+          <p class="step dim">1 passed (1 retry)</p>
+        </div>
+        <ul class="learn">
+          <li><div class="row"><span>Playwright</span><span>in progress</span></div><div class="track"></div></li>
+          <li><div class="row"><span>API automation</span><span>in progress</span></div><div class="track"></div></li>
+          <li><div class="row"><span>CI</span><span>in progress</span></div><div class="track"></div></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 7. CONTACT -->
+    <section class="test" id="contact" data-state="pass" aria-labelledby="contact-t">
+      <div class="test-head"><span class="test-title" id="contact-t">it('should be easy to reach')</span><span class="badge">PASS</span></div>
+      <div class="test-body">
+        <h2>Say hi, or report a bug on this page.</h2>
+        <p class="lede">Email is the fastest way to reach me. I'm on LinkedIn and GitHub too.</p>
+        <div class="contact-grid">
+          <div class="links">
+            <a class="btn" href="mailto:rafayarwork01@gmail.com">Email <span>rafayarwork01@gmail.com</span></a>
+            <a class="btn alt" href="https://linkedin.com/in/syedmuhammadrafayhassni" target="_blank" rel="noopener">LinkedIn <span>/in/syedmuhammadrafayhassni</span></a>
+            <a class="btn alt" href="https://github.com/qa-rafay-sdet" target="_blank" rel="noopener">GitHub <span>qa-rafay-sdet</span></a>
+          </div>
+          <form aria-label="Message form (demo, does not send)">
+            <label>Name<input type="text" name="name" autocomplete="name"></label>
+            <label>Email<input type="email" name="email" autocomplete="email"></label>
+            <label>Message<textarea name="message" rows="4"></textarea></label>
+            <button type="button" class="btn">Send message</button>
+            <p class="note">Demo form. It doesn't send anything yet, so please use the email button.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL REPORT -->
+    <section class="report" id="report" data-done aria-labelledby="repTitle">
+      <p class="kicker">$ rafay.spec · final report</p>
+      <h2 id="repTitle">All tests passed.</h2>
+      <dl class="tally">
+        <div><dt>passed</dt><dd id="repPass">7</dd></div>
+        <div><dt>failed</dt><dd>0</dd></div>
+        <div><dt>retried</dt><dd id="repRetry">1</dd></div>
+        <div class="js-only"><dt>time</dt><dd id="repTime">0.0s</dd></div>
+      </dl>
+      <p id="repNote">The automation test needed one retry. Ask me about it.</p>
+      <div class="cta">
+        <button type="button" class="btn js-only" id="rerun">↻ Re-run suite</button>
+        <a class="btn alt" href="mailto:rafayarwork01@gmail.com">Email me</a>
+      </div>
+    </section>
+
+    <footer class="site">rafay.spec · one HTML file, no frameworks · 2026</footer>
   </main>
 </div>
 
 <div class="pill" aria-label="Test progress">
-  <span id="pCount">0/7</span><div class="bar"><i id="pBar"></i></div><span id="pTime">0.0s</span>
+  <span id="pCount">7/7</span><div class="bar"><i id="pBar" style="width:100%"></i></div><span id="pTime">✓</span>
 </div>
 
 <script>
 (function(){
-  var NAMES=['should introduce the tester','should explain who I am','should list what I test','should show sample work','should share what I write','should automate the boring parts','should be easy to reach'];
-  var TOTAL=NAMES.length,t0=Date.now(),passed=0;
-  var list=document.getElementById('rList');
-  var rows=NAMES.map(function(n){var li=document.createElement('li');li.dataset.state='queued';li.innerHTML='<span class="dot">○</span><span>'+n+'</span>';list.appendChild(li);return li});
+  function $(s,r){return (r||document).querySelector(s)}
+  function $$(s,r){return [].slice.call((r||document).querySelectorAll(s))}
+  var cards=$$('.test'),rows=$$('#rList li'),TOTAL=cards.length;
+  var report=$('#report'),steps=$$('.log .step');
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var icon={queued:'○',running:'◐',pass:'✓',fail:'✗'};
-  function paint(i,s){rows[i].dataset.state=s;rows[i].firstChild.textContent=icon[s]}
+  var passed=0,retried=0,runId=0,t0=0,tick=0,celebrated=false,io=null;
+
+  function setState(i,s,label,dot){
+    cards[i].dataset.state=s;
+    $('.badge',cards[i]).textContent=label||s.toUpperCase();
+    rows[i].dataset.state=s;
+    $('.dot',rows[i]).textContent=dot||icon[s];
+  }
+  function elapsed(){return ((Date.now()-t0)/1000).toFixed(1)+'s'}
   function stats(){
     var txt=passed+'/'+TOTAL,pct=(passed/TOTAL*100)+'%';
-    document.getElementById('rCount').textContent=txt+' passed';document.getElementById('pCount').textContent=txt;
-    document.getElementById('rBar').style.width=pct;document.getElementById('pBar').style.width=pct;
+    $('#rCount').textContent=txt+' passed';$('#pCount').textContent=txt;
+    $('#rBar').style.width=pct;$('#pBar').style.width=pct;
+    $('#repPass').textContent=passed;$('#repRetry').textContent=retried;
+    if(passed<TOTAL){
+      $('#repTitle').textContent='Suite still running…';
+      $('#repNote').textContent=passed+' of '+TOTAL+' tests passed so far. Scroll through the page to run the rest.';
+    }
   }
-  var tick=setInterval(function(){var s=((Date.now()-t0)/1000).toFixed(1)+'s';document.getElementById('rTime').textContent=s;document.getElementById('pTime').textContent=s},100);
-  window.__stopTimer=function(){clearInterval(tick)};
-  stats();
+  function startTimer(){
+    clearInterval(tick);t0=Date.now();
+    tick=setInterval(function(){var s=elapsed();$('#rTime').textContent=s;$('#pTime').textContent=s;$('#repTime').textContent=s},100);
+  }
+  /* timeouts die quietly if the suite was re-run in the meantime */
+  function later(fn,ms){var id=runId;setTimeout(function(){if(id===runId)fn()},reduce?0:ms)}
 
-  var cards=[].slice.call(document.querySelectorAll('.test'));
-  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  function setBadge(c,s){c.dataset.state=s;c.querySelector('.badge').textContent=s.toUpperCase()}
-  function run(card,idx){
-    if(card.__done)return;card.__done=true;
-    setBadge(card,'running');paint(idx,'running');
-    setTimeout(function(){setBadge(card,'pass');paint(idx,'pass');passed++;stats()},reduce?0:700);
+  function pass(i,label){
+    setState(i,'pass',label);passed++;stats();
+    if(passed===TOTAL)finish();
   }
-  cards.forEach(function(c,i){c.__idx=i;setBadge(c,'queued')});
-  if(!('IntersectionObserver' in window)){cards.forEach(function(c,i){run(c,i)});}
-  else{
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);run(e.target,e.target.__idx)}})},{threshold:.25});
+  function run(i){
+    for(var j=0;j<i;j++)if(!cards[j].__done)run(j);   /* tests above always run first */
+    var c=cards[i];if(c.__done)return;c.__done=true;
+    if(io)io.unobserve(c);
+    setState(i,'running');
+    if(c.id==='automation')return flaky(i);
+    later(function(){pass(i)},700);
+  }
+  /* the automation test: fail on purpose, retry once, pass */
+  function flaky(i){
+    var c=cards[i];
+    function show(a,b){for(var k=a;k<b;k++)steps[k].classList.add('on')}
+    later(function(){
+      setState(i,'fail');c.classList.add('shake');show(0,3);
+      later(function(){
+        c.classList.remove('shake');setState(i,'running','RETRY 1/1','↻');show(3,4);
+        later(function(){retried=1;show(4,steps.length);pass(i,'PASS · 1 RETRY')},1100);
+      },1600);
+    },800);
+  }
+  function finish(){
+    clearInterval(tick);
+    var s=elapsed();
+    $('#rTime').textContent=s;$('#pTime').textContent='✓ '+s;$('#repTime').textContent=s;
+    $('#repTitle').textContent='All tests passed.';
+    $('#repNote').textContent='The automation test needed one retry. Ask me about it.';
+    report.setAttribute('data-done','');
+    var r=report.getBoundingClientRect();
+    if(r.top<innerHeight&&r.bottom>0)celebrate();
+  }
+  function celebrate(){
+    if(celebrated||passed<TOTAL)return;celebrated=true;
+    if(reduce)return;
+    var cv=document.createElement('canvas');cv.id='confetti';document.body.appendChild(cv);
+    var dpr=Math.min(devicePixelRatio||1,2),W=cv.width=innerWidth*dpr,H=cv.height=innerHeight*dpr,x=cv.getContext('2d');
+    var cols=['#5eead4','#a5b4fc','#6366f1','#2dd4bf','#f1f5f9'],ps=[],n=innerWidth<700?70:140;
+    for(var k=0;k<n;k++)ps.push({x:W/2,y:H*.75,vx:(Math.random()-.5)*W*.022,vy:-(Math.random()*.02+.012)*H,s:(Math.random()*8+6)*dpr,r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[k%cols.length]});
+    var start=performance.now();
+    (function frame(now){
+      var t=now-start;x.clearRect(0,0,W,H);
+      ps.forEach(function(p){
+        p.vy+=H*.0005;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.r+=p.vr;
+        x.save();x.translate(p.x,p.y);x.rotate(p.r);x.globalAlpha=Math.max(0,1-t/3200);
+        x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/2,p.s,p.s*.6);
+        x.strokeStyle='#0f1b2d';x.lineWidth=dpr;x.strokeRect(-p.s/2,-p.s/2,p.s,p.s*.6);x.restore();
+      });
+      if(t<3200)requestAnimationFrame(frame);else cv.remove();
+    })(start);
+  }
+
+  function reset(){
+    runId++;passed=0;retried=0;celebrated=false;
+    cards.forEach(function(c,i){c.__done=false;c.classList.remove('shake');setState(i,'queued')});
+    steps.forEach(function(p){p.classList.remove('on')});
+    report.removeAttribute('data-done');
+    stats();startTimer();
+  }
+  function observe(){
+    if(!('IntersectionObserver' in window)){run(TOTAL-1);return}
+    if(io)io.disconnect();
+    /* fire when a card's top edge is a quarter of the way up the screen; works for cards taller than the viewport */
+    io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)run(cards.indexOf(e.target))})},{rootMargin:'0px 0px -25% 0px'});
     cards.forEach(function(c){io.observe(c)});
   }
 
+  reset();observe();
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){if(es[0].isIntersecting)celebrate()},{threshold:.3}).observe(report);
+  }
+  addEventListener('scroll',function(){
+    if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)run(TOTAL-1);
+  },{passive:true});
+
+  $('#rerun').addEventListener('click',function(){
+    reset();
+    scrollTo({top:0,behavior:'instant'});
+    requestAnimationFrame(observe);
+  });
+
+  /* bug report demo */
+  var tabs=$$('.tab'),tickets=$$('.ticket');
+  function pick(v){
+    tabs.forEach(function(b){b.setAttribute('aria-pressed',b.dataset.show===v)});
+    tickets.forEach(function(t){t.hidden=t.dataset.v!==v});
+  }
+  tabs.forEach(function(b){b.addEventListener('click',function(){pick(b.dataset.show)})});
+  pick('vague');
+
   /* mouse-only effects */
   if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!reduce){
-    var blob=document.querySelector('.blob');
+    var blob=$('.blob');
     addEventListener('mousemove',function(e){blob.style.transform='translate('+e.clientX+'px,'+e.clientY+'px)'},{passive:true});
-    cards.forEach(function(c){
-      c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(900px) rotateX('+(-y*3)+'deg) rotateY('+(x*3)+'deg)'});
+    $$('.tilt').forEach(function(c){
+      c.addEventListener('mousemove',function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform='perspective(700px) rotateX('+(-y*6)+'deg) rotateY('+(x*6)+'deg) translateY(-2px)'});
       c.addEventListener('mouseleave',function(){c.style.transform=''});
     });
   }
